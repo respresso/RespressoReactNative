@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "16.8.3",
-    "react-native": "0.58.5"
+    "react-native": "0.58.5",
+    "react-native-localize": "^1.0.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.9",
