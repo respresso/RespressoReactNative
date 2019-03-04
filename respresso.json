@@ -1,6 +1,6 @@
 {
-	"serverUrl": "https://app.respresso.io",
-	"projectToken": "75ea1c52-6860-4814-bba8-5b07f8a0be15",
+	"serverUrl": "http://localhost:8080",
+	"projectToken": "05d743cd-3784-41b7-80ed-1f5ceed0939d",
 	"resources": [
 		{
 			"category": "localization",
@@ -9,12 +9,12 @@
 		},
 		{
 			"category": "color",
-			"group": "sass",
+			"group": "json",
 			"version": "1.0.0"
 		},
 		{
 			"category": "image",
-			"group": "svg",
+			"group": "reactnative",
 			"version": "1.0.0"
 		},
 		{

@@ -5,27 +5,53 @@
  * Generated with the TypeScript template
  * https://github.com/emin93/react-native-template-typescript
  * 
+ * react-native-localize use from
+ * https://github.com/react-native-community/react-native-localize/blob/master/example/src/SyncExample.js
+ * 
  * @format
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, I18nManager, Image} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import * as RNLocalize from "react-native-localize";
+import i18n from "i18n-js";
 
-interface Props {}
-export default class App extends Component<Props> {
+const colors = require("./respresso/colors/RespressoColors.json");
+
+interface StringArray {
+  [lang: string]: Function;
+}
+const translationGetters: StringArray = {
+  en: () => require("./respresso/localization/respresso.strings-en.json"),
+  de: () => require("./respresso/localization/respresso.strings-de.json")
+};
+
+const setI18nConfig = () => {
+  // fallback if no available language fits
+  const fallback = { languageTag: "en", isRTL: false };
+  const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
+
+  // update layout direction
+  I18nManager.forceRTL(isRTL);
+
+  // set i18n-js config
+  i18n.translations[languageTag] = translationGetters[languageTag]();
+  i18n.locale = languageTag;
+};
+
+export default class App extends Component<any> {
+  constructor(props: any) {
+    super(props);
+    setI18nConfig(); // set initial config
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Image source={require('./respresso/images/tomcat.png')} />
+        <Text style={styles.welcome}>{i18n.t("welcome")}</Text>
+        <Text style={styles.instructions}>{i18n.t("firstname")} {i18n.t("lastname")}</Text>
       </View>
     );
   }
@@ -42,10 +68,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color: colors.kek
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
+    color: colors.barna,
     marginBottom: 5,
   },
 });
